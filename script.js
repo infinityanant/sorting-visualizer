@@ -1,8 +1,9 @@
 let barsContainer = document.getElementById("bars-container");
+let speedbtn=150;
 let array = [];
 console.log(barsContainer);
 
-// Generate random array
+
 function generateArray() {
     let size=20;
     array = [];
@@ -20,36 +21,39 @@ function generateArray() {
   
 } 
 
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+document.getElementById("speed").addEventListener("input",(e)=>{
+    speedbtn=400-Number(e.target.value)
+    
+});
+function sleep() {
+    return new Promise(resolve => setTimeout(resolve, speedbtn));
 }
 
-// Bubble Sort with visualization
+
 async function bubbleSort() {
     let bars = document.getElementsByClassName("bar");
 
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length - i - 1; j++) {
 
-            // Highlight bars being compared
+           
             bars[j].style.background = "red";
             bars[j + 1].style.background = "red";
 
             if (array[j] > array[j + 1]) {
-                // Swap values in array
+               
                 let temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
 
-                // Swap heights visually
+               
                 bars[j].style.height = array[j] + "px";
                 bars[j + 1].style.height = array[j + 1] + "px";
             }
 
-             await sleep(150); // wait to show animation
+             await sleep(speedbtn); 
 
-            // Reset color
+         
             bars[j].style.background = "steelblue";
             bars[j + 1].style.background = "steelblue";
         }
@@ -100,7 +104,7 @@ async function InsertionSort(){
 
             bars[j].style.height= array[j] +"px";
             bars[j-1].style.height= array[j-1] +"px";
-            await sleep(150)
+            await sleep(speedbtn)
               bars[j].style.background="steelblue";
             bars[j-1].style.background="steelblue";
             j--;
@@ -131,7 +135,7 @@ async function merge(low, mid, high) {
     while (left <= mid && right <= high) {
         bars[left].style.background = "red";
         bars[right].style.background = "red";
-        await sleep(120);
+        await sleep(speedbtn);
 
         if (array[left] < array[right]) {
             temp.push(array[left]);
@@ -165,10 +169,64 @@ async function merge(low, mid, high) {
         array[low + i] = temp[i];
         bars[low + i].style.height = temp[i] + "px";
         bars[low + i].style.background = "steelblue";
-        await sleep(80);
+        await sleep(speedbtn);
         bars[low + i].style.background = "steelblue";
     }
 }
+async function quickSortVisualizer(low, high) {
+    if (low < high) {
+        let p = await partition(low, high);
+        await quickSortVisualizer(low, p - 1);
+        await quickSortVisualizer(p + 1, high);
+    }
+}
+
+async function partition(low, high) {
+    let bars = document.getElementsByClassName("bar");
+
+    let pivot = array[low];
+    let i = low;
+    let j = high;
+
+    bars[low].style.background = "purple";
+
+    while (i < j) {
+        while (array[i] <= pivot && i < high) {
+            bars[i].style.background = "yellow";
+            await sleep(speedbtn);
+            bars[i].style.background = "steelblue";
+            i++;
+        }
+
+        while (array[j] > pivot && j > low) {
+            bars[j].style.background = "orange";
+            await sleep(80);
+            bars[j].style.background = "steelblue";
+            j--;
+        }
+
+        if (i < j) {
+            swapBars(bars, i, j);
+            await sleep(speedbtn);
+        }
+    }
+
+    swapBars(bars, low, j);
+    bars[j].style.background = "green";
+    await sleep(speedbtn);
+
+    return j;
+}
+
+function swapBars(bars, i, j) {
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+
+    bars[i].style.height = array[i] + "px";
+    bars[j].style.height = array[j] + "px";
+}
+
 
 // Button Listeners
 document.getElementById("generate").addEventListener("click", generateArray);
@@ -178,5 +236,8 @@ document.getElementById("insertion").addEventListener("click", InsertionSort);
 
 document.getElementById("merge").addEventListener("click",async()=>{
     await mergeSortVisualizer(0,array.length-1)});
+document.getElementById("quick").addEventListener("click", async () => {
+    await quickSortVisualizer(0, array.length - 1);
+});
 
 generateArray();
