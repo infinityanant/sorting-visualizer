@@ -22,7 +22,7 @@ function generateArray() {
 } 
 
 document.getElementById("speed").addEventListener("input",(e)=>{
-    speedbtn=400-Number(e.target.value)
+    speedbtn=400-Number(e.target.value);
     
 });
 function sleep() {
