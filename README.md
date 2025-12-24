@@ -1,7 +1,7 @@
 # 📊 Sorting Algorithm Visualizer
 
 An interactive **Sorting Algorithm Visualizer** built using **HTML, CSS, and JavaScript**.  
-This project visually demonstrates how different sorting algorithms work step-by-step using animated bars and an adjustable speed controller.
+This project visually demonstrates how popular sorting algorithms work step-by-step using animated bars and an adjustable speed controller.
 
 ---
 
@@ -12,6 +12,7 @@ This project visually demonstrates how different sorting algorithms work step-by
 - ⏱️ Adjustable animation speed  
 - 🔁 Generate a new random array anytime  
 - ⚡ Multiple sorting algorithms implemented  
+- 🧪 Basic unit tests included  
 
 ---
 
@@ -42,3 +43,10 @@ No external libraries or frameworks are required.
 ### Clone the repository
 ```bash
 git clone https://github.com/your-username/sorting-visualizer.git
+
+### BUIlD
+No build step is required.
+
+1. Open `index.html` in any modern web browser  
+2. The project runs completely on the client side  
+
